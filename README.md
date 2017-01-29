@@ -15,7 +15,7 @@ Wiring
 
 Use:
 ----------
-'''
+```
 from ublox_gps import MicropyGPS
 import time, utime
 
@@ -43,7 +43,7 @@ while True:
         my_gps.stringclean()  # cleaning string and starting again
 		
 	time.sleep_ms(1000)   # sleeping 1 second
-'''
+```
 
 More Info:
 -----------
