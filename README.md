@@ -47,7 +47,7 @@ while True:
 
 More Info:
 -----------
-* Blog article: http://lemariva.com/blog/2017/01/wipy-2-0-weather-report
+* Blog article: http://lemariva.com/blog/2017/01/wipy-2-0-weather-report-box
 
 Credits:
 ---------------
