@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # MicropyGPS - a GPS NMEA sentence parser for Micropython/Python 3.X
 
 #
@@ -30,7 +31,7 @@
 # Modified by [Mauro Riva <lemariva@mail.com> <lemariva.com>] for Wipy 2.0
 # * reduce size because of heap size of the Wipy 2.0
 # * added updateall, latitude_decimal, longitude_decimal methods
-#
+# * added support for GLONASS, and GLONASS + GPS
 
 import time
 
@@ -600,11 +601,9 @@ class MicropyGPS(object):
                     self.clean_sentences += 1  # Increment clean sentences received
                     self.sentence_active = False  # Clear Active Processing Flag
 
-                    if self.gps_segments[0] in self.supported_sentences:
-
-                        # parse the Sentence Based on the message type, return True if parse is clean
-                        if self.supported_sentences[self.gps_segments[0]](self):
-
+                    if self.gps_segments[0][2:] in self.supported_sentences:
+                        # parse the Sentence Based on the message type, return True if parse is clean                        
+                        if self.supported_sentences[self.gps_segments[0][2:]](self):                        
                             # Let host know that the GPS object was updated by returning parsed sentence type
                             self.parsed_sentences += 1
                             return self.gps_segments[0]
@@ -683,9 +682,9 @@ class MicropyGPS(object):
     def latitude_string(self):
         """
         Create a readable string of the current latitude data
-        :return: string
-        """
-        lat_string = str(self.latitude[0]) + '° ' + str(self.latitude[1]) + "' " + str(self.latitude[2])
+        :return: string        
+        """        
+        lat_string = str(self.latitude[0]) + 'Â° ' + str(self.latitude[1]) + "' " + str(self.latitude[2])
         return lat_string
 
     def latitude_decimal(self):
@@ -701,7 +700,7 @@ class MicropyGPS(object):
         Create a readable string of the current longitude data
         :return: string
         """
-        long_string = str(self.longitude[0]) + '° ' + str(self.longitude[1]) + "' " + str(self.longitude[2])
+        long_string = str(self.longitude[0]) + 'Â° ' + str(self.longitude[1]) + "' " + str(self.longitude[2])
         return long_string
 
 
@@ -795,6 +794,7 @@ class MicropyGPS(object):
 
         return date_string
     
-    # All the currently supported NMEA sentences
-    supported_sentences = {'GPRMC': gprmc, 'GPGGA': gpgga, 'GPVTG': gpvtg, 'GPGSA': gpgsa, 'GPGSV': gpgsv,
-                           'GPGLL': gpgll}
+    # All the currently supported NMEA sentences    
+    supported_sentences = {'RMC': gprmc, 'GGA': gpgga, 'VTG': gpvtg, 'GSA': gpgsa, 'GSV': gpgsv, 'GLL': gpgll} # GPS + GLONASS
+    
+    
