@@ -1,4 +1,4 @@
-Driver for GPS module using WiPy 2.0
+Driver for GPS module using WiPy 2.0/3.0
 ------------------------------------------------
 This library allows to connect a Ublox NEO-6M/NEO-M8N GPS module to a WiPy 2.0/3.0
 
